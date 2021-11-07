@@ -14,12 +14,12 @@ class BusInput {
     route: string;
 }
 
-@Resolver()
+@Resolver(() => Bus)
 class BusResolver {
     //mutation // todo add auth
     @Mutation(() => Bus, { nullable: true })
-    async addStation(@Arg("busData") data: BusInput): Promise<Bus | undefined> {
-        const bsRepo = await getRepository(Bus);
+    async addBus(@Arg("busData") data: BusInput): Promise<Bus | undefined> {
+        const bsRepo = getRepository(Bus);
         const bus = bsRepo.create({ ...data });
         return bsRepo.save(bus);
     }

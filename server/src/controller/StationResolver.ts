@@ -25,7 +25,7 @@ class StationInput {
     address: string;
 }
 
-@Resolver()
+@Resolver(() => Station)
 class StationResolver {
     @FieldResolver(() => Bus, { nullable: true })
     async bus(@Root() b2s: BusToStation): Promise<Bus | undefined> {
@@ -54,11 +54,11 @@ class StationResolver {
     }
 
     //mutation // todo add auth
-    @Mutation(() => Station)
+    @Mutation(() => Station, { nullable: true })
     async addStation(
         @Arg("stationData") data: StationInput
     ): Promise<Station | undefined> {
-        const stRepo = await getRepository(Station);
+        const stRepo = getRepository(Station);
         const station = stRepo.create({ ...data });
         return stRepo.save(station);
     }
