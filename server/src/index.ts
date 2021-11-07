@@ -5,6 +5,7 @@ import { buildSchema } from "type-graphql";
 import StationResolver from "./controller/StationResolver";
 import { createConnection } from "typeorm";
 import BusResolver from "./controller/BusResolver";
+import BusToStationResolver from "./controller/BusToStationResolver";
 
 const PORT = 5000;
 
@@ -13,7 +14,7 @@ const main = async () => {
     const app = express();
     const server = new ApolloServer({
         schema: await buildSchema({
-            resolvers: [StationResolver, BusResolver],
+            resolvers: [StationResolver, BusResolver, BusToStationResolver],
             validate: false,
         }),
     });
