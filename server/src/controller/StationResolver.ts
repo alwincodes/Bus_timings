@@ -1,10 +1,31 @@
-import { FieldResolver, Query, Resolver, Root } from "type-graphql";
-import { getManager } from "typeorm";
+import {
+    Arg,
+    Field,
+    FieldResolver,
+    InputType,
+    Mutation,
+    Query,
+    Resolver,
+    Root,
+} from "type-graphql";
+import { getManager, getRepository } from "typeorm";
 import Bus from "../entities/Bus";
 import BusToStation from "../entities/BusToStation";
 import Station from "../entities/Station";
 
-@Resolver(() => BusToStation)
+@InputType()
+class StationInput {
+    @Field()
+    name: string;
+
+    @Field()
+    location: string;
+
+    @Field()
+    address: string;
+}
+
+@Resolver()
 class StationResolver {
     @FieldResolver(() => Bus, { nullable: true })
     async bus(@Root() b2s: BusToStation): Promise<Bus | undefined> {
@@ -20,6 +41,26 @@ class StationResolver {
         });
 
         return stations;
+    }
+
+    @Query(() => Station, { nullable: true })
+    async getStation(@Arg("id") id: number): Promise<Station | undefined> {
+        const manager = getManager();
+        const station = manager.findOne(Station, {
+            where: `id = '${id}'`,
+            relations: ["busToStation"],
+        });
+        return station;
+    }
+
+    //mutation // todo add auth
+    @Mutation(() => Station)
+    async addStation(
+        @Arg("stationData") data: StationInput
+    ): Promise<Station | undefined> {
+        const stRepo = await getRepository(Station);
+        const station = stRepo.create({ ...data });
+        return stRepo.save(station);
     }
 }
 

@@ -1,17 +1,20 @@
 import "reflect-metadata";
-import { createConnection } from "typeorm";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
 import { buildSchema } from "type-graphql";
 import StationResolver from "./controller/StationResolver";
+import { createConnection } from "typeorm";
 
 const PORT = 5000;
 
 const main = async () => {
-    const connection = await createConnection();
+    await createConnection();
     const app = express();
     const server = new ApolloServer({
-        schema: await buildSchema({ resolvers: [StationResolver] }),
+        schema: await buildSchema({
+            resolvers: [StationResolver],
+            validate: false,
+        }),
     });
 
     await server.start();

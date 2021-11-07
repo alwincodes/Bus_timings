@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "type-graphql";
+import { Field, ObjectType, registerEnumType } from "type-graphql";
 import {
     Column,
     CreateDateColumn,
@@ -10,10 +10,14 @@ import {
 
 import BusToStation from "./BusToStation";
 
-export enum busType {
+export enum BusType {
     PRIVATE = "private",
     KSRTC = "ksrtc",
 }
+registerEnumType(BusType, {
+    name: "BusType",
+    description: "Types of buses either state owned or private",
+});
 
 @ObjectType()
 @Entity()
@@ -26,9 +30,9 @@ class Bus {
     @Column({ type: "varchar", nullable: true, default: "not-given" })
     name: string;
 
-    @Field()
-    @Column({ type: "enum", enum: busType })
-    type: busType;
+    @Field(() => BusType)
+    @Column({ type: "enum", enum: BusType })
+    type: BusType;
 
     @Field()
     @Column()

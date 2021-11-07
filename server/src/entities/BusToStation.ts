@@ -1,5 +1,11 @@
 import { Field, ObjectType } from "type-graphql";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import {
+    Column,
+    Entity,
+    JoinColumn,
+    ManyToOne,
+    PrimaryGeneratedColumn,
+} from "typeorm";
 import Bus from "./Bus";
 import Station from "./Station";
 
@@ -24,10 +30,12 @@ class BusToStation {
 
     @Field(() => Bus, { nullable: true })
     @ManyToOne(() => Bus, (bus) => bus.busToStation, { onDelete: "CASCADE" })
+    @JoinColumn({ name: "busId" })
     public bus!: Bus;
 
     @Field(() => Station, { nullable: true })
     @ManyToOne(() => Station, (st) => st.busToStation, { onDelete: "CASCADE" })
+    @JoinColumn({ name: "stationId" })
     public station!: Station;
 }
 
