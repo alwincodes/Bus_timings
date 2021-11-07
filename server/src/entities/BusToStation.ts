@@ -22,11 +22,11 @@ class BusToStation {
     @Column()
     public time!: string;
 
-    @Field(() => Bus)
+    @Field(() => Bus, { nullable: true })
     @ManyToOne(() => Bus, (bus) => bus.busToStation, { onDelete: "CASCADE" })
     public bus!: Bus;
 
-    @Field(() => Station)
+    @Field(() => Station, { nullable: true })
     @ManyToOne(() => Station, (st) => st.busToStation, { onDelete: "CASCADE" })
     public station!: Station;
 }
