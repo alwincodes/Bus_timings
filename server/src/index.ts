@@ -1,2 +1,8 @@
 import "reflect-metadata";
-console.log("Hello world");
+import { createConnection } from "typeorm";
+
+const main = async () => {
+    const connection = await createConnection();
+};
+
+main().catch((err) => console.error(err.message));
