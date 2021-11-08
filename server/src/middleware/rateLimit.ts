@@ -11,7 +11,7 @@ const rateLimiter: MiddlewareFn<Context> = async (
     const increment = await context.redisClient.incr(key);
     if (increment > 15) {
         //15 request per 10 minute limit
-        throw new Error("whoah limit exceeded");
+        throw new Error("woah limit exceeded! try after 15 minutes");
     } else if (increment === 1) {
         context.redisClient.expire(key, timeWindow);
     }
