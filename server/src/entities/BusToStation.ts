@@ -29,12 +29,12 @@ class BusToStation {
     public time!: string;
 
     @Field(() => Bus, { nullable: true })
-    @ManyToOne(() => Bus, (bus) => bus.busToStation, { onDelete: "CASCADE" })
+    @ManyToOne(() => Bus, (bus) => bus.busToStation)
     @JoinColumn({ name: "busId" })
     public bus!: Bus;
 
     @Field(() => Station, { nullable: true })
-    @ManyToOne(() => Station, (st) => st.busToStation, { onDelete: "CASCADE" })
+    @ManyToOne(() => Station, (st) => st.busToStation)
     @JoinColumn({ name: "stationId" })
     public station!: Station;
 }

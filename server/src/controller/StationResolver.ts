@@ -1,17 +1,15 @@
 import {
     Arg,
     Field,
-    FieldResolver,
     InputType,
     Mutation,
     Query,
     Resolver,
-    Root,
+    UseMiddleware,
 } from "type-graphql";
 import { getManager, getRepository } from "typeorm";
-import Bus from "../entities/Bus";
-import BusToStation from "../entities/BusToStation";
 import Station from "../entities/Station";
+import rateLimiter from "../middleware/rateLimit";
 
 @InputType()
 class StationInput {
@@ -27,28 +25,23 @@ class StationInput {
 
 @Resolver(() => Station)
 class StationResolver {
-    @FieldResolver(() => Bus, { nullable: true })
-    async bus(@Root() b2s: BusToStation): Promise<Bus | undefined> {
-        const manager = getManager();
-        return await manager.findOne(Bus, { where: `id = ${b2s.busId}` });
-    }
-
     @Query(() => [Station])
     async getAllStation(): Promise<Station[]> {
         const manager = getManager();
         const stations = await manager.find(Station, {
-            relations: ["busToStation"],
+            relations: ["busToStation", "busToStation.bus"],
         });
 
         return stations;
     }
 
     @Query(() => Station, { nullable: true })
+    @UseMiddleware(rateLimiter)
     async getStation(@Arg("id") id: number): Promise<Station | undefined> {
         const manager = getManager();
         const station = manager.findOne(Station, {
-            where: `id = '${id}'`,
-            relations: ["busToStation"],
+            where: `Station.id = '${id}'`,
+            relations: ["busToStation", "busToStation.bus"],
         });
         return station;
     }
