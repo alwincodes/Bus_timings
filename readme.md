@@ -11,3 +11,9 @@ data this application can be used anywhere
 -   MySQl
 -   Type-Graphql
 -   TypeORM
+-   IORedis
+
+## Databases Used
+
+-   MySQL
+-   Redis
