@@ -1,0 +1,19 @@
+query getStationTimings($getStationId: Float!) {
+    getStation(id: $getStationId) {
+        id
+        name
+        location
+        address
+        busToStation {
+            busToStationId
+            time
+            bus {
+                name
+                type
+                route
+                updatedDate
+                createdDate
+            }
+        }
+    }
+}
