@@ -28,12 +28,18 @@ class BusToStation {
     @Column()
     public time!: string;
 
-    @Field(() => Bus, { nullable: true })
+    @Field(() => Bus, {
+        nullable: true,
+        complexity: ({ args, childComplexity }) => childComplexity + 1,
+    })
     @ManyToOne(() => Bus, (bus) => bus.busToStation)
     @JoinColumn({ name: "busId" })
     public bus!: Bus;
 
-    @Field(() => Station, { nullable: true })
+    @Field(() => Station, {
+        nullable: true,
+        complexity: ({ args, childComplexity }) => childComplexity + 1,
+    })
     @ManyToOne(() => Station, (st) => st.busToStation)
     @JoinColumn({ name: "stationId" })
     public station!: Station;

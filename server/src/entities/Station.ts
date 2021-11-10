@@ -29,7 +29,10 @@ class Station {
     address: string;
 
     /* all the buses that interacts with the station */
-    @Field(() => [BusToStation], { nullable: true })
+    @Field(() => [BusToStation], {
+        nullable: true,
+        complexity: ({ args, childComplexity }) => childComplexity + 1,
+    })
     @OneToMany(() => BusToStation, (bsts) => bsts.station)
     busToStation: BusToStation[];
 

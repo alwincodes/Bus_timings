@@ -39,7 +39,10 @@ class Bus {
     route: string;
 
     /* all the station and timing for the bus */
-    @Field(() => [BusToStation], { nullable: true })
+    @Field(() => [BusToStation], {
+        nullable: true,
+        complexity: ({ args, childComplexity }) => childComplexity + 1,
+    })
     @OneToMany(() => BusToStation, (bsts) => bsts.bus)
     busToStation: BusToStation[];
 

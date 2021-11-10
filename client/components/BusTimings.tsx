@@ -1,5 +1,4 @@
 import React from "react";
-import { json } from "stream/consumers";
 import { useGetStationTimingsQuery } from "../graphql/generated/graphql";
 
 interface BusTimingsProps {
