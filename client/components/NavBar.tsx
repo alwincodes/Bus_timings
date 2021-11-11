@@ -1,6 +1,8 @@
 import { Button } from "@chakra-ui/button";
+import { useColorMode, useColorModeValue } from "@chakra-ui/color-mode";
 import { Box, Flex, Heading, Link } from "@chakra-ui/layout";
 import { useRouter } from "next/dist/client/router";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
 import React from "react";
 
@@ -8,6 +10,8 @@ interface NavBarProps {}
 
 export const NavBar: React.FC<NavBarProps> = ({}) => {
     const router = useRouter();
+    const { colorMode, toggleColorMode } = useColorMode();
+    const color = useColorModeValue("whitesmoke", "lightblue");
 
     return (
         <Flex
@@ -25,8 +29,9 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
                 <NextLink href="/buses">
                     <Button
                         ml={2}
-                        p={2}
+                        p={3}
                         variant="link"
+                        color={color}
                         backgroundColor={
                             router.pathname === "/buses"
                                 ? "gray.600"
@@ -36,6 +41,9 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
                         Find Buses
                     </Button>
                 </NextLink>
+                <Button onClick={toggleColorMode} size="sm" m={2}>
+                    {colorMode === "light" ? <SunIcon /> : <MoonIcon />}
+                </Button>
             </Box>
         </Flex>
     );

@@ -7,10 +7,12 @@ import parseMd from "../utils/parseMd";
 import style from "../styles/index.module.scss";
 import { Button } from "@chakra-ui/button";
 import NextLink from "next/link";
+import { useColorMode } from "@chakra-ui/color-mode";
 interface HomeProps {
     html: string;
 }
 const Home: NextPage<HomeProps> = (props) => {
+    const { colorMode } = useColorMode();
     return (
         <Box width="100wv" padding={4}>
             <Head>
@@ -21,7 +23,11 @@ const Home: NextPage<HomeProps> = (props) => {
             <NavBar />
             <Box
                 padding={5}
-                className={style.md_container}
+                className={
+                    colorMode === "light"
+                        ? style.md_container_light
+                        : style.md_container_dark
+                }
                 dangerouslySetInnerHTML={{ __html: props.html }}
             ></Box>
             <NextLink href="/buses">
@@ -30,6 +36,7 @@ const Home: NextPage<HomeProps> = (props) => {
                     m="1em 0em 0em 2em"
                     p="3"
                     backgroundColor="linkedin.800"
+                    color={colorMode === "dark" ? "inherit" : "white"}
                 >
                     Find Buses
                 </Button>
