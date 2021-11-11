@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/layout";
 import {
     Table,
     TableCaption,
@@ -28,15 +29,14 @@ export const BusTimings: React.FC<BusTimingsProps> = ({ stationId }) => {
     }
 
     return (
-        <div>
-            {" "}
-            <Table variant="simple">
-                <TableCaption>Bus Timing</TableCaption>
+        <Box>
+            <Table variant="striped" colorScheme="gray" size="sm">
+                <TableCaption>Bus Timings</TableCaption>
                 <Thead>
                     <Tr>
                         <Th>Time</Th>
                         <Th>Name</Th>
-                        <Th>Type</Th>
+                        <Th>Bus-Type</Th>
                         <Th>Route</Th>
                     </Tr>
                 </Thead>
@@ -54,6 +54,6 @@ export const BusTimings: React.FC<BusTimingsProps> = ({ stationId }) => {
                         })}
                 </Tbody>
             </Table>
-        </div>
+        </Box>
     );
 };

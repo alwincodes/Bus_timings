@@ -1,4 +1,4 @@
-import { Select } from "@chakra-ui/react";
+import { Box, Select, Tag } from "@chakra-ui/react";
 import React from "react";
 import { useGetAllStationNameQuery } from "../graphql/generated/graphql";
 
@@ -18,7 +18,7 @@ export const StationSelector: React.FC<StationSelectorProps> = ({
         );
     }
     return (
-        <div>
+        <Box>
             {loading && <h6>loading....</h6>}
             <Select
                 onChange={changeHandler}
@@ -34,6 +34,6 @@ export const StationSelector: React.FC<StationSelectorProps> = ({
                         );
                     })}
             </Select>
-        </div>
+        </Box>
     );
 };

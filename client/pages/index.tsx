@@ -1,31 +1,36 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { ChangeEvent, ChangeEventHandler, useState } from "react";
-import { BusTimings } from "../components/BusTimings";
-import { StationSelector } from "../components/StationSelector";
-import styles from "../styles/Home.module.scss";
-
-const Home: NextPage = () => {
-    const [station, setStation] = useState<number>();
-    const selectChangeHandler: ChangeEventHandler<HTMLSelectElement> = (
-        e: ChangeEvent<HTMLSelectElement>
-    ) => {
-        let val = e.target.value;
-        if (val) {
-            setStation((s) => parseInt(val));
-        }
-    };
+import React from "react";
+import { Box, Flex, Heading, Link } from "@chakra-ui/layout";
+import { NavBar } from "../components/NavBar";
+import parseMd from "../utils/parseMd";
+interface HomeProps {
+    html: string;
+}
+const Home: NextPage<HomeProps> = (props) => {
     return (
-        <div className={styles.container}>
+        <Box width="100wv" padding={4}>
             <Head>
                 <title>Bus Finder</title>
                 <meta name="description" content="Bus finder" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <StationSelector changeHandler={selectChangeHandler} />
-            {station && <BusTimings stationId={station} />}
-        </div>
+            <NavBar />
+            <Box
+                padding={5}
+                style={{}}
+                dangerouslySetInnerHTML={{ __html: props.html }}
+            ></Box>
+        </Box>
     );
 };
 
+export async function getStaticProps() {
+    const htmlParsed = parseMd("index");
+    return {
+        props: {
+            html: htmlParsed,
+        },
+    };
+}
 export default Home;
