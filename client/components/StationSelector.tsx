@@ -1,3 +1,4 @@
+import { Select } from "@chakra-ui/react";
 import React from "react";
 import { useGetAllStationNameQuery } from "../graphql/generated/graphql";
 
@@ -9,21 +10,30 @@ export const StationSelector: React.FC<StationSelectorProps> = ({
     changeHandler,
 }) => {
     const { data, loading, error } = useGetAllStationNameQuery();
+    if (error) {
+        return (
+            <div>
+                <h5>{error.message}</h5>
+            </div>
+        );
+    }
     return (
         <div>
             {loading && <h6>loading....</h6>}
-            <select onChange={changeHandler}>
-                <optgroup label="select a station">
-                    {data && //if data exists then display options
-                        data.getAllStation.map((station) => {
-                            return (
-                                <option key={station.id} value={station.id}>
-                                    {station.name}
-                                </option>
-                            );
-                        })}
-                </optgroup>
-            </select>
+            <Select
+                onChange={changeHandler}
+                placeholder="select a station"
+                style={{ margin: "20px 0px" }}
+            >
+                {data && //if data exists then display options
+                    data.getAllStation.map((station) => {
+                        return (
+                            <option key={station.id} value={station.id}>
+                                {station.name}
+                            </option>
+                        );
+                    })}
+            </Select>
         </div>
     );
 };

@@ -1,3 +1,13 @@
+import {
+    Table,
+    TableCaption,
+    Thead,
+    Tr,
+    Th,
+    Tbody,
+    Td,
+    Tfoot,
+} from "@chakra-ui/table";
 import React from "react";
 import { useGetStationTimingsQuery } from "../graphql/generated/graphql";
 
@@ -19,42 +29,31 @@ export const BusTimings: React.FC<BusTimingsProps> = ({ stationId }) => {
 
     return (
         <div>
-            <style jsx>
-                {`
-                    table,
-                    th,
-                    td {
-                        border: 1px solid black;
-                    }
-
-                    td {
-                        padding: 10px;
-                    }
-                `}
-            </style>
-            <table>
-                <thead>
-                    <tr>
-                        <th>time</th>
-                        <th>name</th>
-                        <th>type</th>
-                        <th>route</th>
-                    </tr>
-                </thead>
-                <tbody>
+            {" "}
+            <Table variant="simple">
+                <TableCaption>Bus Timing</TableCaption>
+                <Thead>
+                    <Tr>
+                        <Th>Time</Th>
+                        <Th>Name</Th>
+                        <Th>Type</Th>
+                        <Th>Route</Th>
+                    </Tr>
+                </Thead>
+                <Tbody>
                     {data &&
                         data.getStation?.busToStation?.map((d) => {
                             return (
-                                <tr key={d.busToStationId}>
-                                    <td>{d.time}</td>
-                                    <td>{d.bus?.name}</td>
-                                    <td>{d.bus?.type}</td>
-                                    <td>{d.bus?.route}</td>
-                                </tr>
+                                <Tr key={d.busToStationId}>
+                                    <Td>{d.time}</Td>
+                                    <Td>{d.bus?.name}</Td>
+                                    <Td>{d.bus?.type}</Td>
+                                    <Td>{d.bus?.route}</Td>
+                                </Tr>
                             );
                         })}
-                </tbody>
-            </table>
+                </Tbody>
+            </Table>
         </div>
     );
 };

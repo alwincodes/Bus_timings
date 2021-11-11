@@ -10,7 +10,10 @@ const Home: NextPage = () => {
     const selectChangeHandler: ChangeEventHandler<HTMLSelectElement> = (
         e: ChangeEvent<HTMLSelectElement>
     ) => {
-        setStation((s) => parseInt(e.target.value));
+        let val = e.target.value;
+        if (val) {
+            setStation((s) => parseInt(val));
+        }
     };
     return (
         <div className={styles.container}>
