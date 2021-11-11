@@ -4,6 +4,9 @@ import React from "react";
 import { Box, Flex, Heading, Link } from "@chakra-ui/layout";
 import { NavBar } from "../components/NavBar";
 import parseMd from "../utils/parseMd";
+import style from "../styles/index.module.scss";
+import { Button } from "@chakra-ui/button";
+import NextLink from "next/link";
 interface HomeProps {
     html: string;
 }
@@ -18,9 +21,19 @@ const Home: NextPage<HomeProps> = (props) => {
             <NavBar />
             <Box
                 padding={5}
-                style={{}}
+                className={style.md_container}
                 dangerouslySetInnerHTML={{ __html: props.html }}
             ></Box>
+            <NextLink href="/buses">
+                <Button
+                    variant="link"
+                    m="1em 0em 0em 2em"
+                    p="3"
+                    backgroundColor="linkedin.800"
+                >
+                    Find Buses
+                </Button>
+            </NextLink>
         </Box>
     );
 };

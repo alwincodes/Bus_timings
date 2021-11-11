@@ -36,20 +36,6 @@ export const NavBar: React.FC<NavBarProps> = ({}) => {
                         Find Buses
                     </Button>
                 </NextLink>
-                <NextLink href="/about">
-                    <Button
-                        ml={2}
-                        p={2}
-                        variant="link"
-                        backgroundColor={
-                            router.pathname === "/about"
-                                ? "gray.600"
-                                : "linkedin.800"
-                        }
-                    >
-                        About
-                    </Button>
-                </NextLink>
             </Box>
         </Flex>
     );
